@@ -2,8 +2,8 @@
   <MyNotification v-if="store.notificationText">
     <p>{{ store.notificationText }}</p>
   </MyNotification>
-  <CrosswordTable :ownerMap="store.crosswordOwnerMap" />
-  <AnswerInput :isWin="store.isWin"/>
+  <CrosswordTable/>
+  <AnswerInput/>
 </template>
 
 <script lang="ts">

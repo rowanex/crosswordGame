@@ -6,6 +6,7 @@ import Position from '@/interfaces/Position';
 
 
 export const useCrosswordStore = defineStore('crossword', () => {
+
     const words = ref<string[]>(['полк', 'пол', 'кол', 'клоп', 'потолок'])
     const revealedWords = ref<string[]>([]);
 
@@ -18,6 +19,7 @@ export const useCrosswordStore = defineStore('crossword', () => {
 
     const isWrongAnswer = ref<boolean>(false);
 
+    
     const generateCrossword = () => {
         crossword.value = CWG(words.value)
         crosswordOwnerMap.value = crossword.value.ownerMap;

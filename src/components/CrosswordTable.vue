@@ -1,7 +1,7 @@
 <template>
     <div class="crossword-1">
         <table>
-            <tr v-for="(row, rowIndex) in ownerMap" :key="rowIndex">
+            <tr v-for="(row, rowIndex) in store.crosswordOwnerMap" :key="rowIndex">
                 <td v-for="(cell, colIndex) in row" :key="colIndex">
                     <div v-if="cell && typeof cell === 'object' && cell.isRevealed">
                         {{ cell.letter }}
@@ -20,18 +20,18 @@
   
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { useCrosswordStore } from '@/store/CrosswordStore'
 
 export default defineComponent({
     name: 'CrosswordTable',
-    props: {
-        ownerMap: {
-            required: true,
-            type: Object
-        }
+    setup() {
+        const store = useCrosswordStore();
+
+        return { store }
     }
 });
 </script>
-  
+
   
 <style scoped>
 table {

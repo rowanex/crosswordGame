@@ -7,7 +7,7 @@
             class="answer-input" 
             placeholder="Введите ответ!" 
             v-model="store.answer"
-            :disabled="isWin" 
+            :disabled="store.isWin" 
             @change="store.checkAnswer"
         >
     </div>
@@ -19,12 +19,6 @@ import { useCrosswordStore } from '@/store/CrosswordStore'
 
 export default defineComponent({
     name: 'AnswerInput',
-    props: {
-        isWin: {
-            required: true,
-            type: Boolean
-        }
-    },
     setup(){
 
         const store = useCrosswordStore();
