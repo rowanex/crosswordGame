@@ -6,15 +6,16 @@
             id="asnwer" 
             class="answer-input" 
             placeholder="Введите ответ!" 
-            v-model="answer"
+            v-model="store.answer"
             :disabled="isWin" 
-            @change="handlerAnswer"
+            @change="store.checkAnswer"
         >
     </div>
 </template>
   
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
+import { useCrosswordStore } from '@/store/CrosswordStore'
 
 export default defineComponent({
     name: 'AnswerInput',
@@ -24,15 +25,11 @@ export default defineComponent({
             type: Boolean
         }
     },
-    setup(props, { emit }){
-        const answer = ref<string>('');
+    setup(){
 
-        const handlerAnswer = () => {
-            emit('checkAnswer', answer.value)
-            answer.value = ''
-        }
+        const store = useCrosswordStore();
 
-        return { answer, handlerAnswer }
+        return { store }
     }
 });
 </script>

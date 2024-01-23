@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "cwg": "^0.2.2",
+    "pinia": "^2.1.7",
     "vue": "^3.2.13"
   },
   "devDependencies": {
