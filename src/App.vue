@@ -1,34 +1,15 @@
 <template>
-  <MyNotification v-if="store.notificationText">
-    <p>{{ store.notificationText }}</p>
-  </MyNotification>
-  <CrosswordTable/>
-  <AnswerInput/>
+  <CrosswordGame/>
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeMount } from 'vue';
-import { useCrosswordStore } from '@/store/CrosswordStore'
-import MyNotification from './components/MyNotification.vue';
-import AnswerInput from './components/AnswerInput.vue'
-import CrosswordTable from './components/CrosswordTable.vue';
+import { defineComponent } from 'vue';
+import CrosswordGame from './components/CrosswordGame.vue';
 
 export default defineComponent({
   name: 'App',
   components: {
-    MyNotification,
-    CrosswordTable,
-    AnswerInput
-  },
-  setup() {
-
-    const store = useCrosswordStore();
-
-    onBeforeMount(() => {
-      store.generateCrossword();
-    })
-
-    return { store }
+    CrosswordGame
   }
 });
 </script>

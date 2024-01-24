@@ -7,9 +7,14 @@
             class="answer-input" 
             placeholder="Введите ответ!" 
             v-model="store.answer"
-            :disabled="store.isWin" 
-            @change="store.checkAnswer"
+            disabled
         >
+        <button 
+          class="clear-btn"
+          @click="store.answer = ''"
+        >
+            Очистить ответ!
+        </button>
     </div>
 </template>
   

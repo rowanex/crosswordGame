@@ -1,13 +1,12 @@
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { defineStore } from 'pinia';
 import CWG from 'cwg';
 import Position from '@/interfaces/Position';
 
 
-
 export const useCrosswordStore = defineStore('crossword', () => {
 
-    const words = ref<string[]>(['полк', 'пол', 'кол', 'клоп', 'потолок'])
+    const words = ref<string[]>(['полк', 'пол', 'кол', 'клоп', 'потолок', 'лес'])
     const revealedWords = ref<string[]>([]);
 
     const crossword = ref();
@@ -17,12 +16,14 @@ export const useCrosswordStore = defineStore('crossword', () => {
 
     const countOfAnsweredWords = ref<number>(0);
 
-    const isWrongAnswer = ref<boolean>(false);
 
-    
     const generateCrossword = () => {
         crossword.value = CWG(words.value)
         crosswordOwnerMap.value = crossword.value.ownerMap;
+    }
+
+    const addLetterToAnswer = (letter: string) => {
+        answer.value += letter;
     }
 
 
@@ -31,13 +32,10 @@ export const useCrosswordStore = defineStore('crossword', () => {
             if (words.value.includes(answer.value.trim().toLowerCase())) {
                 revealWord(answer.value.trim().toLowerCase());
                 countOfAnsweredWords.value += 1;
-                isWrongAnswer.value = false;
                 revealedWords.value.push(answer.value.trim().toLowerCase());
-            } else {
-                isWrongAnswer.value = true;
+                answer.value = '';
             }
         }
-        answer.value = '';
     }
 
 
@@ -65,11 +63,28 @@ export const useCrosswordStore = defineStore('crossword', () => {
     const notificationText = computed(() => {
         if (isWin.value) {
             return 'Вы победили';
-        } else if (isWrongAnswer.value) {
-            return 'Вы ошиблись';
         }
         return ''
     })
+
+
+    const letters = computed(() => {
+        const uniqueLettersSet = new Set<string>();
+
+        for (const word of words.value) {
+            for (const letter of word) {
+                uniqueLettersSet.add(letter);
+            }
+        }
+
+        return uniqueLettersSet;
+    })
+
+
+    watch(answer, () => {
+        checkAnswer();
+    })
+
 
     return {
         words,
@@ -78,11 +93,12 @@ export const useCrosswordStore = defineStore('crossword', () => {
         crosswordOwnerMap,
         answer,
         countOfAnsweredWords,
-        isWrongAnswer,
         generateCrossword,
         checkAnswer,
         revealWord,
         isWin,
         notificationText,
-      };
+        letters,
+        addLetterToAnswer
+    };
 })
