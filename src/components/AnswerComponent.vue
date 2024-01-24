@@ -12,7 +12,7 @@ import LetterButton from './LetterButton.vue';
 import AnswerInput from '@/components/AnswerInput.vue'
 
 export default defineComponent({
-    name: 'AnsewComponent',
+    name: 'AnswerComponent',
     components: {
         LetterButton,
         AnswerInput
