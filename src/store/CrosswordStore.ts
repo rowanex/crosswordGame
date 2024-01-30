@@ -27,6 +27,10 @@ export const useCrosswordStore = defineStore('crossword', () => {
         answer.value += letter;
     }
 
+    const deleteLetterFromAnswer = () => {
+        answer.value = answer.value.slice(0, -1);
+    }
+
 
     const checkAnswer = () => {
         if (!revealedWords.value.includes(answer.value.trim().toLowerCase())) {
@@ -82,11 +86,6 @@ export const useCrosswordStore = defineStore('crossword', () => {
     })
 
 
-    watch(answer, () => {
-        checkAnswer();
-    })
-
-
     return {
         words,
         revealedWords,
@@ -100,6 +99,7 @@ export const useCrosswordStore = defineStore('crossword', () => {
         isWin,
         notificationText,
         letters,
-        addLetterToAnswer
+        addLetterToAnswer,
+        deleteLetterFromAnswer
     };
 })

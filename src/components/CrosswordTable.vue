@@ -69,7 +69,7 @@ td {
     text-align: center;
 }
 
-.crossword-2 {
+/* .crossword-2 {
     display: flex;
     flex-direction: column;
 }
@@ -85,10 +85,7 @@ td {
     display: flex;
     align-items: center;
     justify-content: center;
-}
+} */
 
-.none {
-    display: none;
-}
 </style>
   
