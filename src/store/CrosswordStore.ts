@@ -1,4 +1,4 @@
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import CWG from 'cwg';
 import Position from '@/interfaces/Position';
@@ -15,14 +15,15 @@ export const useCrosswordStore = defineStore('crossword', () => {
     const answer = ref('');
 
     const countOfAnsweredWords = ref<number>(0);
-
+    const isFall = ref<boolean>(false);
+    const isGuessed = ref<boolean>(false);
 
     const generateCrossword = () => {
         crossword.value = CWG(words.value)
         crosswordOwnerMap.value = crossword.value.ownerMap;
     }
 
-    
+
     const addLetterToAnswer = (letter: string) => {
         answer.value += letter;
     }
@@ -33,15 +34,26 @@ export const useCrosswordStore = defineStore('crossword', () => {
 
 
     const checkAnswer = () => {
-        if (!revealedWords.value.includes(answer.value.trim().toLowerCase())) {
-            if (words.value.includes(answer.value.trim().toLowerCase())) {
-                revealWord(answer.value.trim().toLowerCase());
+        const trimmedAnswer = answer.value.trim().toLowerCase();
+
+        if (!revealedWords.value.includes(trimmedAnswer)) {
+            isGuessed.value = false;
+
+            if (words.value.includes(trimmedAnswer)) {
+                isFall.value = false;
+                revealWord(trimmedAnswer);
                 countOfAnsweredWords.value += 1;
-                revealedWords.value.push(answer.value.trim().toLowerCase());
+                revealedWords.value.push(trimmedAnswer);
                 answer.value = '';
+            } else {
+                isFall.value = true;
             }
+        } else {
+            isGuessed.value = true;
+            isFall.value = false;
         }
-    }
+    };
+
 
 
     const revealWord = (word: string) => {
@@ -68,6 +80,12 @@ export const useCrosswordStore = defineStore('crossword', () => {
     const notificationText = computed(() => {
         if (isWin.value) {
             return 'Вы победили';
+        }
+        if (isFall.value) {
+            return 'Вы ошиблись'
+        }
+        if (isGuessed.value) {
+            return 'Вы уже отгадали это слово'
         }
         return ''
     })
