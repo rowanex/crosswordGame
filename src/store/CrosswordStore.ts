@@ -22,6 +22,7 @@ export const useCrosswordStore = defineStore('crossword', () => {
         crosswordOwnerMap.value = crossword.value.ownerMap;
     }
 
+    
     const addLetterToAnswer = (letter: string) => {
         answer.value += letter;
     }
